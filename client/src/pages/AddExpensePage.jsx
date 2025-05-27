@@ -6,16 +6,32 @@ export default function AddExpensePage() {
   const { groupId } = useParams();
   const navigate = useNavigate();
 
+  // Mock group members (in real case, fetch this)
+  const members = ['user1@test.com', 'user2@test.com'];
+
   const [formData, setFormData] = useState({
     description: '',
     amount: '',
-    paidBy: 'user@test.com', // TODO: Replace with actual logged-in user email
+    paidBy: members[0],
+    splitAmong: [members[0], members[1]]
   });
+
+  const handleCheckboxChange = (email) => {
+    setFormData((prev) => {
+      const updated = prev.splitAmong.includes(email)
+        ? prev.splitAmong.filter((e) => e !== email)
+        : [...prev.splitAmong, email];
+      return { ...prev, splitAmong: updated };
+    });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // TODO: Send to backend
-    navigate(`/groups/${groupId}`);
+
+    // Mock submit logic (replace with API)
+    console.log('Expense submitted:', formData);
+    alert('Expense added successfully!');
+    navigate(`/group/${groupId}`);
   };
 
   return (
@@ -52,6 +68,38 @@ export default function AddExpensePage() {
               className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
               required
             />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Paid By</label>
+            <select
+              value={formData.paidBy}
+              onChange={(e) => setFormData({ ...formData, paidBy: e.target.value })}
+              className="w-full px-4 py-2 border rounded-lg"
+              required
+            >
+              {members.map((email) => (
+                <option key={email} value={email}>
+                  {email}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Split Among</label>
+            <div className="flex flex-col gap-2">
+              {members.map((email) => (
+                <label key={email} className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    checked={formData.splitAmong.includes(email)}
+                    onChange={() => handleCheckboxChange(email)}
+                  />
+                  <span>{email}</span>
+                </label>
+              ))}
+            </div>
           </div>
 
           <button
