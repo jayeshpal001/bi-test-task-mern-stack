@@ -1,26 +1,27 @@
-// import React from 'react'
+import { Route, Routes } from 'react-router-dom';
 
-import { Route, Routes } from 'react-router-dom'
-import AuthPage from './pages/AuthPage'
-import Dashboard from './pages/Dashboard'
-import CreateGroup from './pages/CreateGroup'
-import GroupDetailsPage from './pages/GroupDetailsPage'
-import AddExpensePage from './pages/AddExpensePage'
-import InviteMembersPage from './pages/InviteMembersPage'
-import Navbar from './components/Navbar'
+import AuthPage from './pages/AuthPage';
+import Dashboard from './pages/Dashboard';
+import CreateGroup from './pages/CreateGroup';
+import GroupExpenses from './pages/GroupExpenses';
+import InviteAcceptPage from './pages/InviteAcceptPage';
+import ProfilePage from './pages/ProfilePage';
+// import ProtectedRoute from './components/ProtectRoute';
+
 const App = () => {
   return (
-    <div>
-      <Routes>
-         <Route path="/" element={<AuthPage />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/create-group" element={<CreateGroup/>} />
-        <Route path="/groups/:groupId" element={<GroupDetailsPage />} />
-        <Route path="/groups/:groupId/add-expense" element={<AddExpensePage />} />
-        <Route path="/groups/:groupId/invite" element={<InviteMembersPage />} />
-      </Routes>
-    </div>
-  )
-}
+    <Routes>
+      {/* Public Routes */}
+      <Route path="/" element={<AuthPage />} />
+      <Route path="/invite/:groupId" element={<InviteAcceptPage />} />
 
-export default App
+      {/* Protected Routes - Uncomment if ProtectedRoute is implemented */}
+      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/create-group" element={<CreateGroup />} />
+      <Route path="/groups/:groupId" element={<GroupExpenses />} />
+      <Route path="/profile" element={<ProfilePage />} />
+    </Routes>
+  );
+};
+
+export default App;
