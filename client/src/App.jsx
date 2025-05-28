@@ -3,58 +3,23 @@ import { Route, Routes } from 'react-router-dom';
 import AuthPage from './pages/AuthPage';
 import Dashboard from './pages/Dashboard';
 import CreateGroup from './pages/CreateGroup';
-import GroupDetailsPage from './pages/GroupDetailsPage';
-import AddExpensePage from './pages/AddExpensePage';
-import InviteMembersPage from './pages/InviteMembersPage';
-import PrivateRoute from './components/PrivateRoutes';
+import GroupExpenses from './pages/GroupExpenses';
+import InviteAcceptPage from './pages/InviteAcceptPage';
+import ProfilePage from './pages/ProfilePage';
+// import ProtectedRoute from './components/ProtectRoute';
 
 const App = () => {
   return (
     <Routes>
-      {/* Public Route */}
+      {/* Public Routes */}
       <Route path="/" element={<AuthPage />} />
+      <Route path="/invite/:groupId" element={<InviteAcceptPage />} />
 
-      {/* Protected Routes */}
-      <Route
-        path="/dashboard"
-        element={
-          <PrivateRoute>
-            <Dashboard />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/create-group"
-        element={
-          <PrivateRoute>
-            <CreateGroup />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/groups/:groupId"
-        element={
-          <PrivateRoute>
-            <GroupDetailsPage />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/groups/:groupId/add-expense"
-        element={
-          <PrivateRoute>
-            <AddExpensePage />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/groups/:groupId/invite"
-        element={
-          <PrivateRoute>
-            <InviteMembersPage />
-          </PrivateRoute>
-        }
-      />
+      {/* Protected Routes - Uncomment if ProtectedRoute is implemented */}
+      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/create-group" element={<CreateGroup />} />
+      <Route path="/groups/:groupId" element={<GroupExpenses />} />
+      <Route path="/profile" element={<ProfilePage />} />
     </Routes>
   );
 };
